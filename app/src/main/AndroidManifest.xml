@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jonathanfinerty.wifitoggle">
+
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <application
+        android:label="@string/app_name"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning,MissingApplicationIcon">
+
+        <receiver
+            android:name=".ChangeWifiStateReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="WifiChange" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
