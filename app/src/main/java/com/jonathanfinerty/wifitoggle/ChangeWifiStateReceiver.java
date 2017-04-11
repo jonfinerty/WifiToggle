@@ -10,24 +10,25 @@ public class ChangeWifiStateReceiver extends BroadcastReceiver {
 
     private static final String TAG = ChangeWifiStateReceiver.class.getSimpleName();
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         if (intent.getExtras() == null) {
-            Log.e(TAG, "Error, expecting 'enabled' boolean extra on broadcast");
+            log("Error, expecting 'enabled' boolean extra on broadcast");
             return;
         }
-        
+
         Object enabledExtra = intent.getExtras().get("enabled");
 
         if (enabledExtra == null) {
-            Log.e(TAG, "Error, expecting 'enabled' boolean extra on broadcast");
+            log("Error, expecting 'enabled' boolean extra on broadcast");
             return;
         }
 
         if (!(enabledExtra instanceof Boolean)) {
-            Log.e(TAG, "Error, 'enabled' extra should be boolean");
+            log("Error, 'enabled' extra should be boolean");
             return;
         }
 
@@ -43,5 +44,11 @@ public class ChangeWifiStateReceiver extends BroadcastReceiver {
         Log.i(TAG, msg);
 
         wifiManager.setWifiEnabled(enabled);
+    }
+
+    private void log(String message) {
+        final String exampleUsage = "Example Usage: adb shell am broadcast -a WifiChange -n com.jonathanfinerty.wifitoggle/.ChangeWifiStateReceiver --ez enabled true";
+        Log.e(TAG, message);
+        Log.e(TAG, exampleUsage);
     }
 }
